@@ -1,0 +1,7 @@
+# Patches
+# Format: app_name.patches.patch_module_name
+
+# Example:
+# frappe_customizations.patches.v1_0.update_customer_fields
+
+frappe_customizations.patches.fix_education_workspace_filter

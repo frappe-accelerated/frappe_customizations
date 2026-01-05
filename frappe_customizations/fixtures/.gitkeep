@@ -1,0 +1,2 @@
+# Exported fixtures will be stored here
+# Run: bench --site <sitename> export-fixtures --app custom_app
