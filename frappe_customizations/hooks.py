@@ -5,8 +5,8 @@ app_description = "Frappe framework customizations, patches, and fixtures"
 app_email = "admin@frappe-accelerated.com"
 app_license = "MIT"
 
-# Required apps for Drive-Insights integration
-required_apps = ["frappe", "insights", "drive"]
+# Required apps
+required_apps = ["frappe"]
 
 # Fixtures - auto-imported on bench migrate
 # These customizations will survive updates and rebuilds
