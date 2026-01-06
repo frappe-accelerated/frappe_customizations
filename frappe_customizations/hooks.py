@@ -44,14 +44,11 @@ fixtures = [
 # }
 
 # Scheduled Tasks
-# scheduler_events = {
-#     "daily": [
-#         "frappe_customizations.tasks.daily"
-#     ],
-#     "hourly": [
-#         "frappe_customizations.tasks.hourly"
-#     ],
-# }
+scheduler_events = {
+    "weekly": [
+        "frappe_customizations.services.document_preview.cleanup_old_previews"
+    ],
+}
 
 # Jinja template customizations
 # jinja = {
