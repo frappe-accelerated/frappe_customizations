@@ -50,6 +50,12 @@ scheduler_events = {
     ],
 }
 
+# After app install hook - apply Drive patches
+after_install = "frappe_customizations.setup.after_install"
+
+# After migrate hook - reapply patches if Drive was updated
+after_migrate = "frappe_customizations.setup.after_migrate"
+
 # Jinja template customizations
 # jinja = {
 #     "methods": [

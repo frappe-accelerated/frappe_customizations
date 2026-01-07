@@ -66,6 +66,51 @@ bench --site <sitename> export-fixtures --app frappe_customizations
    frappe_customizations.patches.your_patch_name
    ```
 
+## Drive App Customizations
+
+This app includes customizations for the Frappe Drive app:
+
+### Document Preview Service
+
+Replaces Microsoft's external preview service with local LibreOffice conversion for Office documents (DOCX, XLSX, PPTX, etc.).
+
+**Requirements:**
+- LibreOffice must be installed in the container/server
+- Install with: `apt-get install -y libreoffice-writer libreoffice-calc libreoffice-impress --no-install-recommends`
+
+**Features:**
+- Converts Office documents to PDF using LibreOffice headless mode
+- Caches converted PDFs for performance
+- Automatic cleanup of old previews (weekly scheduled task)
+- No external service dependencies
+
+### Vue Component Patches
+
+Patches for Drive frontend components to fix preview loading issues:
+- `MSOfficePreview.vue` - LibreOffice-based document preview
+- `PDFPreview.vue` - Fixed PDF preview re-rendering
+
+**Applying Patches:**
+
+After installing/updating the Drive app, apply the patches:
+
+```bash
+# Apply patches and rebuild frontend
+bench execute frappe_customizations.drive_patches.apply_patches.apply_all
+
+# Or apply patches only (without rebuilding)
+bench execute frappe_customizations.drive_patches.apply_patches.apply_all --kwargs '{"rebuild": false}'
+
+# Then manually rebuild
+cd apps/drive/frontend && pnpm run build
+```
+
+**Check Patch Status:**
+
+```bash
+bench execute frappe_customizations.drive_patches.apply_patches.check_patches
+```
+
 ## Organization
 
 This app is part of the `frappe-accelerated` organization:

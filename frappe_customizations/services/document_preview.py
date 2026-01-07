@@ -4,6 +4,7 @@ Document Preview Service using LibreOffice for conversion.
 Converts office documents (DOCX, XLSX, PPTX, etc.) to PDF for preview.
 """
 import os
+import shutil
 import subprocess
 import tempfile
 import hashlib
@@ -97,8 +98,8 @@ def convert_to_pdf(source_path: str, file_hash: str) -> str:
             if not os.path.exists(temp_pdf):
                 frappe.throw("PDF conversion completed but output file not found")
 
-            # Move to cache location
-            os.rename(temp_pdf, output_pdf)
+            # Move to cache location (use shutil.move for cross-device support)
+            shutil.move(temp_pdf, output_pdf)
 
             return output_pdf
 
@@ -218,11 +219,12 @@ def convert_drive_file(entity_name: str):
             return {"success": False, "error": "File path not found"}
 
         # Make path absolute if needed
+        # Drive stores files under sites/<site>/private/files/<path>
         if not os.path.isabs(file_path):
-            file_path = frappe.get_site_path(file_path)
+            file_path = frappe.get_site_path("private", "files", file_path)
 
         if not os.path.exists(file_path):
-            return {"success": False, "error": "File not found on disk"}
+            return {"success": False, "error": f"File not found on disk: {file_path}"}
 
         # Check if format is supported
         if not is_supported_format(drive_file.title or file_path):
